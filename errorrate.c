@@ -442,9 +442,8 @@ int main(int argc, char const *argv[]) {
                 total_read_count += read_counts[re][i][pos];
             }
         }
-        if (total_read_count == 0) {
-            positions = pos;
-        } else {
+        positions = pos;
+        if (!(total_read_count == 0)) {
             break;
         }
     }
