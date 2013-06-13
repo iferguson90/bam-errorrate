@@ -347,7 +347,8 @@ int main(int argc, char const *argv[]) {
             qpos = 0;
             mod = 1;
         }
-        hardclipwarned = 0;
+        hardclipwarned    = 0;
+        badcigardelwarned = 0;
 
         for (cpos = 0; cpos < ecigar_len; cpos++) {
             if (ecigar[cpos] == 'S') {
