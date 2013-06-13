@@ -48,6 +48,7 @@ int main(int argc, char const *argv[]) {
         unsigned int cpos;
         unsigned int ecigar_len, ecigar_maxlen, emd_len, emd_maxlen;
         int hardclipwarned;
+        int badcigardelwarned;
         int line_size;
         size_t nbytes = DEF_SEQ_LEN;
         // unsigned int seq_length;
@@ -366,7 +367,19 @@ int main(int argc, char const *argv[]) {
                 qpos += mod;
                 spos++;
             } else if (ecigar[cpos] == 'D') {
-                read_counts[read_end][DELETION][qpos-mod]++; // TODO use previous qpos for consistency?
+                if (qpos - mod < 0 || qpos - mod >= 16384) {
+                    if (badcigardelwarned == 0) {
+                        badcigardelwarned = 1;
+                        fprintf(stderr, "ERROR: %s\n", line);
+                        fprintf(stderr, "Detected a deletion at the beginning of a CIGAR string.\n");
+                        fprintf(stderr, "This might indicate a poorly constructed bam.\n");
+                        fprintf(stderr, "Only warning about this once. Diagnostic info follows:\n");
+                        fprintf(stderr, "(spos=%d, qpos=%d, cpos=%d, mpos=%d)\n", spos, qpos, cpos, mpos);
+                        fprintf(stderr, "(qpos - mod out of bounds; %d - %d = %d)\n", qpos, mod, qpos-mod);
+                    }
+                } else {
+                    read_counts[read_end][DELETION][qpos-mod]++; // TODO use previous qpos for consistency?
+                }
                 if (!(emd[mpos] == 'D')) {
                     fprintf(stderr, "ERROR: %s\n", line);
                     fprintf(stderr, "CIGAR indicated a deletion while MD did not.\n"); return 1;
