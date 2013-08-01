@@ -41,7 +41,7 @@ int main(int argc, char const *argv[]) {
 
     while (1) {
         char *line, *loc;
-        char *cigar, *seq, *md, *ecigar, *emd;
+        char *cigar, *seq, *qual, *md, *ecigar, *emd;
         long flag;
         int spos, mpos, qpos, mod;
         int read_end, rev_complement;
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]) {
 
         // split by fields:
         // qname, flag, rname, pos, mapq, cigar, rnext, pnext, tlen, seq, qual, tags
-        flag = 0; cigar = NULL; seq = NULL; md = NULL;
+        flag = 0; cigar = NULL; seq = NULL; qual = NULL; md = NULL;
         loc = strtok(line,"\t");
         i = 0;
         while (1) {
@@ -102,6 +102,8 @@ int main(int argc, char const *argv[]) {
                 cigar = loc;
             } else if (i == 9) {
                 seq = loc;
+            } else if (i == 10) {
+                qual = loc;
             } else if (i >= 11) {
                 // search for MD tag
                 loc = strstr(loc,"MD:Z:");
@@ -129,6 +131,12 @@ int main(int argc, char const *argv[]) {
             free(line);
             continue; // Indicates "PCR or optical duplicate"
             // We skip for consistency with the original tool
+        }
+
+        // bsmap specific hack
+        if (!strcmp(cigar, "0M") && !strcmp(seq, "*") && !strcmp(qual, "*")) {
+            free(line);
+            continue;
         }
 
         // Determine the read end
