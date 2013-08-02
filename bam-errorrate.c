@@ -484,7 +484,7 @@ int main(int argc, char const *argv[]) {
         sum_deletion       = 0;
         sum_error          = 0;
 
-        for (pos = 0; pos < positions; pos++) {
+        for (pos = 0; pos <= positions; pos++) {
             uint64_t total, match, mismatch, ambiguous, insertion, deletion, error;
             double error_rate, mismatch_rate, ambiguous_rate, insertion_rate, deletion_rate;
             uint64_t position_count;
