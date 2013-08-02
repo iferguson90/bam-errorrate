@@ -488,6 +488,8 @@ int main(int argc, char const *argv[]) {
             uint64_t total, match, mismatch, ambiguous, insertion, deletion, error;
             double error_rate, mismatch_rate, ambiguous_rate, insertion_rate, deletion_rate;
             uint64_t position_count;
+            int display_pos;
+
             position_count = read_counts[re][TOTAL][pos];
             if (position_count == 0) {
                 printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", re, pos, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -521,8 +523,10 @@ int main(int argc, char const *argv[]) {
             sum_deletion       += deletion;
             sum_error          += error;
 
+            display_pos = pos + 1; // display should be 1-based, not 0-based
+
             printf("%d\t%d\t%"PRIu64"\t%"PRIu64"\t%"PRIu64"\t%.17lf\t%"PRIu64"\t%.17lf\t%"PRIu64"\t%.17lf\t%"PRIu64"\t%.17lf\t%"PRIu64"\t%.17lf\n",
-                re, pos, total, match, error, error_rate, mismatch, mismatch_rate, ambiguous, ambiguous_rate, insertion, insertion_rate, deletion, deletion_rate);
+                re, display_pos, total, match, error, error_rate, mismatch, mismatch_rate, ambiguous, ambiguous_rate, insertion, insertion_rate, deletion, deletion_rate);
         }
 
         double error_rate, mismatch_rate, ambiguous_rate, insertion_rate, deletion_rate;
