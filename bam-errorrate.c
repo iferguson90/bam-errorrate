@@ -441,6 +441,9 @@ int main(int argc, char const *argv[]) {
 
     int re, pos;
 
+    if (argc > 0) {
+        printf("# bam-errorate; command executed: %s\n", argv[0]);
+    }
     printf("read_end\tposition\ttotal\tmatch\terror\terror_rate\tmismatch\tmismatch_rate\tambiguous\tambiguous_rate\tinsertion\tinsertion_rate\tdeletion\tdeletion_rate\n");
 
     uint64_t total_read_count;
