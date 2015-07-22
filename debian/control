@@ -1,0 +1,16 @@
+Source: bam-errorrate1.0a3
+Section: science
+Priority: optional
+Maintainer: Genome Developers <genome-dev@genome.wustl.edu>
+Uploaders: Ian Ferguson <iferguso@genome.wustl.edu>
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 7.0.50~), cmake, git-core, libboost1.51-tgi-dev
+Standards-Version: 3.9.2
+Homepage: https://github.com/iferguson90/bam-errorrate
+Vcs-Git: git://github.com/iferguson90/bam-errorrate.git
+Vcs-Browser: https://github.com/iferguson90/bam-errorrate
+
+Package: bam-errorrate1.0a3
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Calculates the per-position error rates across all reads in a bam
