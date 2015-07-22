@@ -1,5 +1,11 @@
 ```
-sudo apt-get install libboost1.51-tgi-dev
+sudo apt-get install libboost1.51-tgi-dev cmake build-essential git-core
+git submodule update --init --recursive
+mkdir -p bamtools/build
+pushd bamtools/build
+cmake ..
+make -j8 
+popd
 g++ -Wall -std=c++0x -Ibamtools/include -lz -I/opt/boost-tgi/1.51/include bam-errorrate.cpp -o bam-errorrate bamtools/lib/libbamtools.a bamtools/lib/libbamtools-utils.a bamtools/lib/libjsoncpp.a
 ```
 
